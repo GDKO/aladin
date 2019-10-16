@@ -8,8 +8,8 @@ Requirements
 ------------
 * Programs
   - [minimap2](https://github.com/lh3/minimap2) - v2.17 or later
-  - [canu](https://github.com/marbl/canu) - v1.8 or later
-  - [mummer](https://github.com/mummer4/mummer) - v4 or later
+  - [canu](https://github.com/marbl/canu) - v1.8
+  - [mummer](https://github.com/mummer4/mummer) - v4
   - [aragorn](http://mbio-serv2.mbioekol.lu.se/ARAGORN) - v1.2.38
 * Python Libraries
   - Biopython
