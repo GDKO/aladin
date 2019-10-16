@@ -2,7 +2,7 @@ ALADIN
 ===============
 ### Overview
 
-ALADIN (mitochondriAL circulAr Dna reconstItutioN) use DNA long reads (Nanopore or Pacbio) and a mitochondrial reference of the same species or the close on, and get the mitochondrial genome of the reads species
+ALADIN (mitochondriAL circulAr Dna reconstItutioN) uses DNA long reads (Nanopore or Pacbio) and a reference sequence to assemble the mitochondrial genome.
 
 Requirements
 ------------
