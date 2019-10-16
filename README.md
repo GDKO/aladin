@@ -17,7 +17,7 @@ Requirements
 
 Quick usage
 ------------
-```aladin.py -r reference -i reads -d N```
+```aladin.py -r reference -i reads```
 
 Full usage
 -----------
