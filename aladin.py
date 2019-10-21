@@ -80,6 +80,7 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     sam_file = "map/aln.sam"
     extract_reads_file = "map/read_ids.txt.fasta"
     extract_reads_frag_file = "map/read_ids.txt.fasta.frag.fasta"
+    extract_reads_frag_file_100x = "map/read_ids.txt.fasta.frag.100x.fasta"
     assembly_file = "canu/extract.contigs.fasta"
     aragorn_file = "canu/aragorn.txt"
     gfa_file = "canu/extract.contigs.gfa"
@@ -98,6 +99,7 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     subprocess.call(["minimap2", "--sam-hit-only", "-t", threads, "--secondary=no", "-ax",
                      format_mini, reference, reads],
                      stdout=sam_out, stderr=FERR)
+    sam_out.close()
     fichier_vide(sam_file)
 
     # Extract and fragment reads
@@ -113,10 +115,19 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     extract_reads(reads, read_ids, extract_reads_file)
     fragment_fasta(extract_reads_file, length, fraction)
 
+    # Select 100x of reads
+    num_frags = len([1 for line in open(extract_reads_frag_file) if line.startswith(">")])
+    num_100x = (genome_size*1000*200)/length
+    fraction_select = min(num_100x/num_frags,1)
+    seqtk_out = open(extract_reads_frag_file_100x,'w')
+    subprocess.call(["seqtk", "seq", "-f", str(fraction_select), extract_reads_frag_file],stdout=seqtk_out,stderr=FERR)
+    seqtk_out.close()
+
     # Run canu
     print(status_d['2'])
+    genome_size = "genomeSize=" + str(genome_size) + "k"
     subprocess.call(["canu", "-d", "canu", "-p", "extract", genome_size, "corOutCoverage=200", "correctedErrorRate=0.15",
-                     format_canu, extract_reads_frag_file],
+                     format_canu, extract_reads_frag_file_100x],
                      stdout=FERR, stderr=FERR)
     fichier_vide(assembly_file)
 
@@ -207,11 +218,10 @@ def main():
     data_format = str(args['--data_format'])
     mode = str(args['--mode'])
     genome_size = int(args['--genome_size'])
-    genome_size = "genomeSize=" + str(genome_size) + "k"
 
     os.chdir(dir_output)
 
-    check_programs("minimap2", "canu", "nucmer", "show-coords", "aragorn")
+    check_programs("minimap2", "canu", "nucmer", "show-coords", "aragorn", "seqtk")
 
     run_pipeline(data_format, mode, reference, reads, genome_size, length, fraction, threads)
 
