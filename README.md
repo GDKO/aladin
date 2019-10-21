@@ -11,6 +11,7 @@ Requirements
   - [canu](https://github.com/marbl/canu) - v1.8
   - [mummer](https://github.com/mummer4/mummer) - v4
   - [aragorn](http://mbio-serv2.mbioekol.lu.se/ARAGORN) - v1.2.38
+  - [seqtk](https://github.com/lh3/seqtk) - v1.3-r106
 * Python Libraries
   - Biopython
   - docopt
