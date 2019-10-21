@@ -120,7 +120,8 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     num_100x = (genome_size*1000*200)/length
     fraction_select = min(num_100x/num_frags,1)
     seqtk_out = open(extract_reads_frag_file_100x,'w')
-    subprocess.call(["seqtk", "seq", "-f", str(fraction_select), extract_reads_frag_file],stdout=seqtk_out,stderr=FERR)
+    subprocess.call(["seqtk", "seq", "-f", str(fraction_select), extract_reads_frag_file],
+                     stdout=seqtk_out,stderr=FERR)
     seqtk_out.close()
 
     # Run canu
@@ -131,9 +132,8 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
                      stdout=FERR, stderr=FERR)
     fichier_vide(assembly_file)
 
-    print(status_d['3'])
-
     # Run aragorn to select contig
+    print(status_d['3'])
     aragorn_out = open(aragorn_file, 'w')
     if mode == "M":
         subprocess.call(["aragorn", "-l", "-gc5", "-mt", "-w", assembly_file],
