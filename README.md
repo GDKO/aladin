@@ -8,7 +8,7 @@ Requirements
 ------------
 * Programs
   - [minimap2](https://github.com/lh3/minimap2) - v2.17 or later
-  - [canu](https://github.com/marbl/canu) - v1.8
+  - [canu](https://github.com/marbl/canu) - v1.8 (v1.9 not working yet)
   - [mummer](https://github.com/mummer4/mummer) - v4
   - [aragorn](http://mbio-serv2.mbioekol.lu.se/ARAGORN) - v1.2.38
   - [seqtk](https://github.com/lh3/seqtk) - v1.3-r106

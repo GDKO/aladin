@@ -80,7 +80,7 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     sam_file = "map/aln.sam"
     extract_reads_file = "map/read_ids.txt.fasta"
     extract_reads_frag_file = "map/read_ids.txt.fasta.frag.fasta"
-    extract_reads_frag_file_100x = "map/read_ids.txt.fasta.frag.100x.fasta"
+    extract_reads_frag_file_150x = "map/read_ids.txt.fasta.frag.150x.fasta"
     assembly_file = "canu/extract.contigs.fasta"
     aragorn_file = "canu/aragorn.txt"
     gfa_file = "canu/extract.contigs.gfa"
@@ -115,11 +115,11 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     extract_reads(reads, read_ids, extract_reads_file)
     fragment_fasta(extract_reads_file, length, fraction)
 
-    # Select 100x of reads
+    # Select ~150x of reads
     num_frags = len([1 for line in open(extract_reads_frag_file) if line.startswith(">")])
-    num_100x = (genome_size*1000*200)/length
-    fraction_select = min(num_100x/num_frags,1)
-    seqtk_out = open(extract_reads_frag_file_100x,'w')
+    num_150x = (genome_size*1000*200)/length
+    fraction_select = min(num_150x/num_frags,1)
+    seqtk_out = open(extract_reads_frag_file_150x,'w')
     subprocess.call(["seqtk", "seq", "-f", str(fraction_select), extract_reads_frag_file],
                      stdout=seqtk_out,stderr=FERR)
     seqtk_out.close()
@@ -128,7 +128,7 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
     print(status_d['2'])
     genome_size = "genomeSize=" + str(genome_size) + "k"
     subprocess.call(["canu", "-d", "canu", "-p", "extract", genome_size, "corOutCoverage=200", "correctedErrorRate=0.15",
-                     format_canu, extract_reads_frag_file_100x],
+                     format_canu, extract_reads_frag_file_150x],
                      stdout=FERR, stderr=FERR)
     fichier_vide(assembly_file)
 
@@ -169,6 +169,8 @@ def run_pipeline(data_format, mode, reference, reads, genome_size, length, fract
             if re.search("suggestCircular=yes", str(record.description)):
                 assembly[elem[0]] = str(record.seq)
                 num_circ = 1
+            else:
+                assembly[elem[0]] = str(record.seq)
 
     contigs, length_coords, nucmer_cases = run_nucmer(assembly_file, aragorn_contig)
     mito_contig = aragorn_contig
