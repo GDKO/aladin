@@ -25,7 +25,8 @@ Full usage
 -----------
 ```
     Usage:
-    ./aladin.py -r <FILE> -i <FILE> [-o <DIR>] [-d <STR>] [-m <STR>] [-l <INT>] [-f <FLOAT>] [-s <STR>] [-t <INT>] [--cleanup]
+    ./aladin.py -r <FILE> -i <FILE> [-o <DIR>] [-d <STR>] [-m <STR>] [-l <INT>] 
+                                    [-f <FLOAT>] [-s <STR>] [-t <INT>] [--cleanup]
 
     Options:
         -h, --help                     show options
