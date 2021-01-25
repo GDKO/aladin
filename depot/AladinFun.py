@@ -20,20 +20,9 @@ error_d = {
 status_d = {
     '0': '[+] Mapping reads with minimap2.',
     '1': '[+] Extracting reads.',
-    '2': '[+] Running Canu.',
+    '2': '[+] Assembling the reads.',
     '3': '[+] Finding the mitochondrion.',
-    '4': '[+] Canu and nucmer agree (%s, %s) . Using canu gfa to trim.',
-    '5': '[+] Using nucmer coordinates to trim (%s bases).',
-    '6': '[+] Pipeline finished.'
-}
-
-warn_d = {
-    '0': '[-] No circular tag present, or non-informative gfa in Canu assembly. Will attempt to find the circular contig with nucmer.',
-    '1': '[-] Using canu gfa to trim despite %s bases difference between canu and nucmer. Validate your results',
-    '2': '[-] Using canu gfa to trim (%s bases) despite nucmer not finding any case of circularisation. Validate your results',
-    '3': '[-] Using canu gfa to trim despite nucmer finding multiple cases of circularisation. Validate your results',
-    '4': '[-] Nor Canu nor nucmer found any circular contig.',
-    '5': '[-] No circular tag in canu while nucmer found multiple cases of circularisation.'
+    '4': '[+] Pipeline finished.'
 }
 
 
@@ -102,6 +91,8 @@ def is_fasta(filename):
     with open_files(filename) as handle:
         if handle.readline().startswith(">"):
             return True
+        else:
+            return False
 
 def return_format(filename):
     if is_fasta(filename):
