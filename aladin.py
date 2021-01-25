@@ -179,7 +179,7 @@ def main():
         shutil.rmtree("mini")
         shutil.rmtree("map")
 
-    print(status_d['6'])
+    print(status_d['4'])
     resultats_dir = os.getcwd()
     print("Results be in "+resultats_dir+"/Mitochondion.fasta")
 
